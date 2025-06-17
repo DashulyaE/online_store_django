@@ -5,7 +5,7 @@ from django.shortcuts import render
 def home(request):
     """Контроллер для отображения домашней страницы"""
 
-    return render(request, "home.html")
+    return render(request, "catalog/home.html")
 
 
 def contacts(request):
@@ -17,4 +17,4 @@ def contacts(request):
         message = request.POST.get("message")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение {message} и номер телефона {phone} получены.")
 
-    return render(request, "contacts.html")
+    return render(request, "catalog/contacts.html")
