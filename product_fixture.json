@@ -1,0 +1,67 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Помидор",
+        "description": "Помидор розовый, летний",
+        "picture": "catalog/foto/tomato.jpg",
+        "category": 1,
+        "price": "200.00",
+        "created_at": "2025-06-22",
+        "updated_at": "2025-06-22"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Апельсин",
+        "description": "Сочный апельсин",
+        "picture": "catalog/foto/orange.jpg",
+        "category": 2,
+        "price": "90.50",
+        "created_at": "2025-06-22",
+        "updated_at": "2025-06-23"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "Огурец",
+        "description": "Огурец летний",
+        "picture": "",
+        "category": 1,
+        "price": "300.00",
+        "created_at": "2025-06-22",
+        "updated_at": "2025-06-22"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "Баклажан",
+        "description": "Спелый",
+        "picture": "",
+        "category": 1,
+        "price": "150.00",
+        "created_at": "2025-06-23",
+        "updated_at": "2025-06-23"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "name": "Киви",
+        "description": "Сочный киви",
+        "picture": "",
+        "category": 2,
+        "price": "350.50",
+        "created_at": "2025-06-23",
+        "updated_at": "2025-06-23"
+    }
+}
+]
