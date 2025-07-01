@@ -17,31 +17,13 @@
     </nav>
 </div>
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Продуктовый магазин</h1>
-    <p class="lead">Вы можете ознакомиться с товарами магазина</p>
-</div>
+{% block head %}
+{% endblock %}
 
 <div class="container">
-    <div class="row text-center">
-        {% for product in products %}
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Удобный сервис рассылок</h4>
-                </div>
-                <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ product.name }}</h1>
-                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ product.description|truncatechars:100 }}</li>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
 
+{% block content %}
+{% endblock %}
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
             <div class="col-12 col-md">
