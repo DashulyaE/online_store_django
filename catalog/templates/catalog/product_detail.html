@@ -3,12 +3,11 @@
 {% block head %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Продуктовый магазин</h1>
-    <p class="lead">Вы можете ознакомиться с товарами магазина</p>
+    <p class="lead">Вы можете ознакомиться с товаром магазина</p>
 </div>
 {% endblock %}
 {% block content %}
 <div class="row text-center">
-    {% for product in products %}
     <div class="col-3">
         <div class="card mb-4 box-shadow">
             <div class="card-header">
@@ -23,6 +22,5 @@
             </div>
         </div>
     </div>
-    {% endfor %}
 </div>
 {% endblock %}
