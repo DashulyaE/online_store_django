@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView, TemplateView, FormView
 
 from catalog.models import Product
 
+
 class ProductListView(ListView):
     model = Product
 
@@ -16,26 +17,15 @@ class ProductDetailView(DetailView):
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=100)
     phone = forms.CharField(max_length=20)
-    message = forms.CharField(widget=forms.Textarea(attrs={'rows': 8, 'cols': 30}))
+    message = forms.CharField(widget=forms.Textarea(attrs={"rows": 8, "cols": 30}))
+
 
 class ContactView(FormView):
-    template_name = 'catalog/contacts.html'
+    template_name = "catalog/contacts.html"
     form_class = ContactForm
 
     def form_valid(self, form):
-        name = form.cleaned_data['name']
-        phone = form.cleaned_data['phone']
-        message = form.cleaned_data['message']
+        name = form.cleaned_data["name"]
+        phone = form.cleaned_data["phone"]
+        message = form.cleaned_data["message"]
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение {message} и номер телефона {phone} получены.")
-
-
-# def contacts(request):
-#     """Контроллер для отображения страницы с контактной информацией и обработку данных формы"""
-#
-#     if request.method == "POST":
-#         name = request.POST.get("name")
-#         phone = request.POST.get("phone")
-#         message = request.POST.get("message")
-#         return HttpResponse(f"Спасибо, {name}! Ваше сообщение {message} и номер телефона {phone} получены.")
-#
-#     return render(request, "catalog/contacts.html")
