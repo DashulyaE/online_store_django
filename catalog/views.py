@@ -1,14 +1,19 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from catalog.models import Product
 
+def product_list(request):
+    """Контроллер для отображения главной страницы со списком товаров"""
+    products = Product.objects.all()
+    context = {'products': products}
+    return render(request, 'catalog/home.html', context)
 
-def home(request):
-    """Контроллер для отображения домашней страницы"""
 
-    latest_products = Product.objects.order_by('-created_at')[:5]
-    print(f"Последние добавленные продукты:{latest_products}")
-    return render(request, "catalog/home.html")
+def product_detail(request, pk):
+    """Контроллер для отображения страницы с описанием товара"""
+    product = get_object_or_404(Product, pk=pk)
+    context = {'product': product}
+    return render(request, 'catalog/product_detail.html', context)
 
 
 def contacts(request):
