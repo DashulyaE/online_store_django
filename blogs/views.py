@@ -1,6 +1,10 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+from blogs.models import Blog
 
 
-# Create your views here.
 class BlogListView(ListView):
-    model = Blogs
+    model = Blog
+
+
+class BlogDetailView(DetailView):
+    model = Blog
