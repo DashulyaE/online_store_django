@@ -8,12 +8,12 @@
         <div class="col p-4 d-flex flex-column position-static">
           <h3 class="mb-0">{{ blog.title }}</h3>
           <div class="mb-1 text-body-secondary">{{ blog.created_at }}</div>
-          <p class="card-text mb-auto">{{ blog.content|truncatechars:100 }}</p> <a href="{% url 'blogs:blog_detail' blog.pk %}" class="icon-link gap-1 icon-link-hover stretched-link">
-Читать подробнее
-        <svg class="bi" aria-hidden="true"><use xlink:href="#chevron-right"></use></svg> </a> </div>
-
+          <p class="card-text mb-auto">{{ blog.content|truncatechars:100 }}</p>
           <img src="{{ blog.preview | media_filter }}" class="img-fluid" >
-
+          <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blogs:blog_detail' blog.pk %}" role="button">Подробно</a>
+          <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blogs:blog_update' blog.pk %}" role="button">Редактировать</a>
+          <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blogs:blog_delete' blog.pk %}" role="button">Удалить</a>
+        </div>
       </div>
     </div>
     {% endfor %}

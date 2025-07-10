@@ -6,6 +6,4 @@ from blogs.models import Blog
 @admin.register(Blog)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("title", "created_at", "publication_attribute")
-    search_fields = (
-        "title",
-    )
+    search_fields = ("title",)
