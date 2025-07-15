@@ -35,16 +35,16 @@
                 <form method="POST" action="" class="form-floating">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="name">Имя</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя" required>
+                        <label>Имя</label>
+                        <div class="form-control">{{ form.name }} </div>
+                     </div>
+                    <div class="mb-3">
+                        <label>Телефон</label>
+                        <div class="form-control">{{ form.phone }} </div>
                     </div>
                     <div class="mb-3">
-                        <label for="phone">Телефон</label>
-                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Контактный телефон" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message">Сообщение</label>
-                        <textarea type="text" name="message" class="form-control" id="message" placeholder="Сообщение" required></textarea>
+                        <label>Сообщение</label>
+                        <div class="form-control">{{ form.message }} </div>
                     </div>
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
                 </form>

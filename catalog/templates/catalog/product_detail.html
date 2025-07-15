@@ -14,16 +14,16 @@
                 <img src="{{ product.picture | media_filter }}" class="img-fluid">
             </div>
             <div class="card-body">
-                <h1 class="card-title pricing-card-title">{{ product.name }}</h1>
-                <h3 class="card-title pricing-card-title">Цена: {{ product.price }}</h3>
+                <h1 class="card-title pricing-card-title">{{ object.name }}</h1>
+                <h3 class="card-title pricing-card-title">Цена: {{ object.price }}</h3>
                 <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                    <li>Категория продукта: {{ product.category}}</li><p>
-                    <li>{{ product.description}}</li><p>
-                    <li>Дата создания: {{ product.created_at|date:"d M Y" }}</li>
-                    <li>Дата изменения: {{ product.updated_at |date:"d M Y"}}</li>
+                    <li>Категория продукта: {{ object.category}}</li><p>
+                    <li>{{ object.description}}</li><p>
+                    <li>Дата создания: {{ object.created_at|date:"d M Y" }}</li>
+                    <li>Дата изменения: {{ object.updated_at |date:"d M Y"}}</li>
                 </ul>
                 <a class="btn btn-lg btn-block btn-outline-primary" href="#" role="button">Купить</a>
-                <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:home' %}" role="button">Назад</a>
+                <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
             </div>
         </div>
     </div>

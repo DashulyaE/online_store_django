@@ -1,0 +1,21 @@
+{% extends 'blogs/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="row mb-2">
+    {% for blog in object_list%}
+    <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h3 class="mb-0">{{ blog.title }}</h3>
+          <div class="mb-1 text-body-secondary">{{ blog.created_at }}</div>
+          <p class="card-text mb-auto">{{ blog.content|truncatechars:100 }}</p>
+          <img src="{{ blog.preview | media_filter }}" class="img-fluid" >
+          <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blogs:blog_detail' blog.pk %}" role="button">Подробно</a>
+          <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blogs:blog_update' blog.pk %}" role="button">Редактировать</a>
+          <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blogs:blog_delete' blog.pk %}" role="button">Удалить</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
