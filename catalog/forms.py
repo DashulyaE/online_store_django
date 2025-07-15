@@ -1,17 +1,6 @@
 from django import forms
 from .models import Product
-
-FORBIDDEN_WORDS = [
-    "казино",
-    "криптовалюта",
-    "крипта",
-    "биржа",
-    "дешево",
-    "бесплатно",
-    "обман",
-    "полиция",
-    "радар",
-]
+from catalog import constants
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -34,15 +23,23 @@ class ProductForm(forms.ModelForm):
         self.fields["price"].widget.attrs.update({"class": "form-control", "type": "integer"})
 
     def clean_name(self):
+        block_words = constants.FORBIDDEN_WORDS
         name = self.cleaned_data.get("name", "").lower()
-        for word in FORBIDDEN_WORDS:
+        for word in block_words:
             if word in name:
                 raise forms.ValidationError(f'Поле "Наименование" не может содержать слово {word}')
         return self.cleaned_data["name"]
 
     def clean_description(self):
+        block_words = constants.FORBIDDEN_WORDS
         description = self.cleaned_data.get("description", "").lower()
-        for word in FORBIDDEN_WORDS:
+        for word in block_words:
             if word in description:
                 raise forms.ValidationError(f'Поле "Описание" не может содержать слово {word}')
         return self.cleaned_data["description"]
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price < 0:
+            raise forms.ValidationError('Цена введена неправильно')
+        return price
