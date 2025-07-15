@@ -27,7 +27,7 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy("catalog:product_list")
 
     def get_success_url(self):
-        return reverse("catalog:product_detail", args=[self.kwargs.get('pk')])
+        return reverse("catalog:product_detail", args=[self.kwargs.get("pk")])
 
 
 class ProductDeleteView(DeleteView):
