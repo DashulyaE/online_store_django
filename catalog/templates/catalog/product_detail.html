@@ -24,6 +24,9 @@
                 </ul>
                 <a class="btn btn-lg btn-block btn-outline-primary" href="#" role="button">Купить</a>
                 <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
+                <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Редактировать</a>
+                <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+
             </div>
         </div>
     </div>

@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name="Наименование")
     description = models.CharField(max_length=250, verbose_name="Описание")
@@ -19,6 +18,7 @@ class Product(models.Model):
     picture = models.ImageField(upload_to="catalog/foto", blank=True, null=True, verbose_name="Фото продукта")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория", related_name="products")
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name="Цена")
+    publication_attribute = models.BooleanField(default=False, verbose_name="Признак публикации")
     created_at = models.DateField(auto_now=False, auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now=True, auto_now_add=False, verbose_name="Дата последнего изменения")
 
