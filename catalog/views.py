@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, FormView, UpdateView, CreateView, DeleteView
@@ -11,28 +12,31 @@ class ProductListView(ListView):
     model = Product
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
+    login_url = reverse_lazy('users:login')
 
-
-class ProductCreateView(CreateView):
-    model = Product
-    form_class = ProductForm
-    success_url = reverse_lazy("catalog:product_list")
-
-
-class ProductUpdateView(UpdateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy("catalog:product_list")
+    login_url = reverse_lazy('users:login')
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy("catalog:product_list")
+    login_url = reverse_lazy('users:login')
 
     def get_success_url(self):
         return reverse("catalog:product_detail", args=[self.kwargs.get("pk")])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:product_list")
+    login_url = reverse_lazy('users:login')
 
 
 class ContactForm(forms.Form):
@@ -41,9 +45,10 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea(attrs={"rows": 8, "cols": 30}))
 
 
-class ContactView(FormView):
+class ContactView(LoginRequiredMixin, FormView):
     template_name = "catalog/contacts.html"
     form_class = ContactForm
+    login_url = reverse_lazy('users:login')
 
     def form_valid(self, form):
         name = form.cleaned_data["name"]
