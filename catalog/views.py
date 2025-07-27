@@ -11,12 +11,15 @@ from catalog.models import Product
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
+from catalog.services import get_products_from_cache
+
+
 class ProductListView(ListView):
     model = Product
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.filter(publication_attribute=True)
+        products = get_products_from_cache()
+        return products.filter(publication_attribute=True)
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, DetailView):
