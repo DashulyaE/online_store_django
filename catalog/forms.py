@@ -24,6 +24,8 @@ class ProductForm(forms.ModelForm):
 
         self.fields["price"].widget.attrs.update({"class": "form-control", "type": "integer"})
 
+
+
     def clean_name(self):
         block_words = constants.FORBIDDEN_WORDS
         name = self.cleaned_data.get("name", "").lower()
@@ -46,3 +48,8 @@ class ProductForm(forms.ModelForm):
             raise forms.ValidationError('Цена не может быть отрицательной')
         return price
 
+
+class ProductModeratorForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ["publication_attribute"]

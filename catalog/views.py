@@ -1,15 +1,21 @@
 from django import forms
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import Permission
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, FormView, UpdateView, CreateView, DeleteView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Product
 
 
 class ProductListView(ListView):
     model = Product
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(publication_attribute=True)
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -22,6 +28,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("catalog:product_list")
     login_url = reverse_lazy('users:login')
 
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
@@ -32,12 +45,25 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse("catalog:product_detail", args=[self.kwargs.get("pk")])
 
+    def get_form_class(self):
+        user = self.request.user
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm('catalog.can_unpublish_product'):
+            return ProductModeratorForm
+        raise PermissionDenied
+
+
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+
     model = Product
     success_url = reverse_lazy("catalog:product_list")
     login_url = reverse_lazy('users:login')
 
+    def test_func(self):
+        product = self.get_object()
+        return self.request.user.has_perm('catalog.delete_product') or self.request.user == product.owner
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=100)
