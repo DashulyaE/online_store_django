@@ -2,16 +2,17 @@ from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, FormView, UpdateView, CreateView, DeleteView
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product
+from catalog.models import Product, Category
 
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
-from catalog.services import get_products_from_cache
+from catalog.services import get_products_from_cache, get_products_by_category
 
 
 class ProductListView(ListView):
@@ -85,3 +86,17 @@ class ContactView(LoginRequiredMixin, FormView):
         phone = form.cleaned_data["phone"]
         message = form.cleaned_data["message"]
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение {message} и номер телефона {phone} получены.")
+
+
+def category_products_view(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    products = get_products_by_category(category_id)
+    context = {
+        'category': category,
+        'products': products
+    }
+    return render(request, 'catalog/category_products.html', context)
+
+def category_view(request):
+    categories = Category.objects.all()
+    return render(request, 'catalog/base.html', {'categories': categories})

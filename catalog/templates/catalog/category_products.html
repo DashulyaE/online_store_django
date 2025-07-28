@@ -1,0 +1,36 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block head %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Продуктовый магазин</h1>
+    <p class="lead">Вы можете ознакомиться с товарами магазина</p>
+</div>
+{% endblock %}
+{% block content %}
+<div class="row text-center">
+    {% for product in products %}
+    <div class="col-3">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <img src="{{ product.picture | media_filter }}" class="img-fluid">
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">{{ product.name }}</h1>
+                <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                    <li>{{ product.description|truncatechars:100 }}</li>
+                </ul>
+                <a class="btn btn-lg btn-block btn-outline-primary" href="#" role="button">Купить</a>
+                <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}" role="button">Подробно</a>
+                {% if perms.catalog.can_unpublish_product or user == product.owner %}
+                    <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Редактировать</a>
+                {% endif %}
+                {% if perms.catalog.delete_product or user == product.owner %}
+                    <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
