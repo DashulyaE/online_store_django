@@ -4,10 +4,29 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_list' %}">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_create' %}">Добавить продукт</a>
+
+        <!-- Выпадающий список категорий -->
+        <div class="dropdown d-inline">
+            <button class="p-2 btn btn-outline-primary dropdown-toggle" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Категории
+            </button>
+        <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+            {% for category in categories %}
+            <li>
+                <a class="dropdown-item" href="{% url 'catalog:category_products' category.id %}">
+                    {{ category.name }}
+                </a>
+            </li>
+            {% empty %}
+            <li><span class="dropdown-item-text">Нет категорий</span></li>
+            {% endfor %}
+        </ul>
+        </div>
+
         {% if user.is_authenticated %}
         <form method="post" action="{% url 'users:logout' %}" style="display: inline">
-        {% csrf_token %}
-        <button type="submit" class="p-2 btn btn-outline-danger">Выйти</button>
+            {% csrf_token %}
+            <button type="submit" class="p-2 btn btn-outline-danger">Выйти</button>
         </form>
         {% else %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Вход</a>
